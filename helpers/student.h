@@ -102,9 +102,11 @@ void handle_student(int client_socket, int session){
                 case 4:
                     // view enrollments
                     int cnt;
+                    char skip[2];
                     get_enrollments(client_socket,session,&cnt,1);
                     if(cnt == 0){
                         wr(client_socket,"No Courses Enrolled...~\n",26);
+                        rd(client_socket,skip,2);
                     }
                     break;
                 case 5: 
@@ -214,14 +216,22 @@ void enroll_course(int client_socket,int session){
             perror("Error obtaining write lock on Student Record!");
             close(fd);
         }
-        int enrollId = set_count(4);
-        set_availability(client_socket,id,-1);
         struct Course c = get_courses(client_socket,id);
-        struct Enrollment e = {session,c.id,c.profId,enrollId,1};
-        write(fd,&e,sizeof(struct Enrollment));
-        char tempBuffer[100];
-        sprintf(tempBuffer,"\nSuccessfully Enrolled in the course - %s\n~\n",c.cname);
-        wr(client_socket,tempBuffer,strlen(tempBuffer)+1);
+        if(c.available > 0){
+            int enrollId = set_count(4);
+            set_availability(client_socket,id,-1);
+            struct Enrollment e = {session,c.id,c.profId,enrollId,1};
+            write(fd,&e,sizeof(struct Enrollment));
+            char tempBuffer[100];
+            sprintf(tempBuffer,"\nSuccessfully Enrolled in the course - %s\n~\n",c.cname);
+            wr(client_socket,tempBuffer,strlen(tempBuffer)+1);
+        }
+
+        else{
+            char skip[2];
+            wr(client_socket,"No seats left...\n~\n",20);
+            rd(client_socket,skip,2);
+        }
         lock.l_type = F_UNLCK;
         fcntl(fd,F_SETLK,&lock);
     }
@@ -258,7 +268,8 @@ int * get_enrollments(int client_socket, int session, int *cnt,int flag){
     int count = 0;
     int *cid = (int *)malloc(arraySize * sizeof(int));
     while((bytesRead=read(fd,&e,sizeof(struct Enrollment))) == sizeof(struct Enrollment) || bytesRead == -1){
-        if(e.isEnrolled){
+       
+        if(e.isEnrolled && e.studentID == session){
             char send[100+sizeof(struct Course)],skip[2];
             struct Course c = get_courses(client_socket,e.courseID);
             if(flag){
@@ -267,14 +278,12 @@ int * get_enrollments(int client_socket, int session, int *cnt,int flag){
                 rd(client_socket,skip,2);
                 memset(send,0,100+sizeof(struct Course));
             }
-
             arraySize += 1;
             cid = (int *)realloc(cid, arraySize * sizeof(int));
             if (cid == NULL) {
                 perror("Memory reallocation failed");
             }
             cid[count++] = e.courseID;
-
         }
     }
     

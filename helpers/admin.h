@@ -13,7 +13,7 @@ bool isnum(const char* str) {
 
 void add_student(int client_socket);
 void add_teacher(int client_socket);
-void view_participant(int ,int);
+void view_participant(int ,int,int);
 void activate_deactivate(int,int);
 void modify(int,int);
 // Funtion to handle login
@@ -88,13 +88,13 @@ void handle_Admin(int client_socket) {
                     add_student(client_socket);
                     break;
                 case 2:
-                    view_participant(client_socket,1);
+                    view_participant(client_socket,1,-1);
                     break;
                 case 3:
                     add_teacher(client_socket);
                     break;
                 case 4:
-                    view_participant(client_socket,2);
+                    view_participant(client_socket,2,-1);
                     break;
                 case 5:
                     activate_deactivate(client_socket,1);
@@ -213,7 +213,7 @@ void add_teacher(int client_socket){
         
 }
 
-void view_participant(int client_socket, int type){
+void view_participant(int client_socket, int type, int sID){
     int fd,len;
     if(type == 1){
         fd = open("records/student_details",O_RDONLY);
@@ -231,24 +231,27 @@ void view_participant(int client_socket, int type){
     }
     int id;
     char buff[10];
-    while(1){
-        wr(client_socket,"Enter the ID number to access: ",32);
-        memset(buff,0,10);
-        rd(client_socket,buff,10);
-        if(buff[0] == '~'){
-            continue;
-        }
-        if(!isnum(buff)){
-                wr(client_socket,"Wrong id entered, Try again...~\n",33);
-        }
-        else{
-            id = atoi(buff);
-            if(id<=0 || get_count(type)<id){
-                wr(client_socket,"Wrong id entered, Try again...~\n",33);
+    if(sID == -1){
+        while(1){
+            wr(client_socket,"Enter the ID number to access: ",32);
+            memset(buff,0,10);
+            rd(client_socket,buff,10);
+            if(buff[0] == '~'){
+                continue;
             }
-            else{break;}
+            if(!isnum(buff)){
+                    wr(client_socket,"Wrong id entered, Try again...~\n",33);
+            }
+            else{
+                id = atoi(buff);
+                if(id<=0 || get_count(type)<id){
+                    wr(client_socket,"Wrong id entered, Try again...~\n",33);
+                }
+                else{break;}
+            }
         }
     }
+    else id = sID;
     struct flock lock;
     lock.l_type = F_RDLCK;
     lock.l_whence = SEEK_SET;

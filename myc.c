@@ -70,6 +70,7 @@ void handle_conn(int client_socket){
             strncpy(dumpBuffer, buffer, strlen(buffer) - 2);
             printf("%s\n", dumpBuffer);
             fflush( stdout);
+            printf("\n");
             writeBytes = write(client_socket,"~",1);
             if (writeBytes == -1)
             {
@@ -91,6 +92,7 @@ void handle_conn(int client_socket){
                 printf("%s",buffer);
                 fflush( stdout);
                 scanf("%[^\n]%*c", writeBuffer);
+                printf("\n");
                 // if(strlen(writeBuffer)==0)break;
             }
             writeBytes = write(client_socket, writeBuffer, strlen(writeBuffer));
