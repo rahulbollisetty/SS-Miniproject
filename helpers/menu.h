@@ -38,4 +38,16 @@ const char *TEACHER_MENU_STR =
     "Enter Choice: \n"
 ;
 const int TEACHER_MENU_LEN = 244;
+
+const char *STUDENT_MENU_STR = 
+    "..........................Welcome to Student Menu..........................\n"
+    "1. View All Offering Courses\n"
+    "2. Enroll New course\n"
+    "3. Drop Course\n"
+    "4. View Course Enrollments\n"
+    "5. Change Password\n"
+    "6. Exit\n"
+    "Enter Choice: \n"
+;
+const int STUDENT_MENU_LEN = 211;
 #endif

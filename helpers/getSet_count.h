@@ -29,7 +29,7 @@ int set_count(int type){
             else if(type == 2)
                 rec.teacher++;
             else if(type == 3) 
-                return rec.courses++;
+                rec.courses++;
             else rec.enrollments++;
             
             write(fd,&rec,sizeof(rec));
@@ -43,7 +43,7 @@ int set_count(int type){
                 return rec.teacher;
             else if(type == 3) 
                 return rec.courses;
-            else rec.enrollments;
+            else return rec.enrollments;
     }
 }
 
@@ -73,14 +73,13 @@ int get_count(int type){
             lock.l_type = F_UNLCK;
             fcntl(fd,F_SETLK,&lock);
             close(fd);
-            printf("%d\n",rec.courses);
             if(type == 1)
                 return rec.student;
             else if(type == 2)
                 return rec.teacher;
             else if(type == 3) 
                 return rec.courses;
-            else rec.enrollments;           
+            else return rec.enrollments;           
     }
 }
 

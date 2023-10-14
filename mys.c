@@ -16,8 +16,11 @@
 #include "helpers/read-write.h"
 #include "structures.h"
 #include "helpers/getSet_count.h"
+#include "helpers/enrollments.h"
 #include "helpers/admin.h"
+#include "helpers/course.h"
 #include "helpers/faculty.h"
+#include "helpers/student.h"
 #include "helpers/login.h"
 
 #define MAX_CLIENTS 100

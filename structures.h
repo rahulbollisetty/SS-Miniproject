@@ -52,7 +52,7 @@ struct Enrollment {
     int courseID;
     int profID;
     int enrollmentID;
-    char enrollmentDate[20]; // Date of enrollment or any other relevant information
+    int isEnrolled;
 };
 
 // Structure to store account count details

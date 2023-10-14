@@ -8,10 +8,10 @@ void delete_course(int,int);
 int faculty_login(int client_socket,char *username, char *password,int *session){
     struct Teacher ad;
     int fd = open("records/teacher_details",O_RDONLY);
-    // if (fd == -1) {
-    //     perror("Failed to open the file");
-    //     exit(1);
-    // }
+    if (fd == -1) {
+        perror("Failed to open the file");
+        exit(1);
+    }
     int id;
     char *substr = strstr(username,"PROF");
     if(substr){
@@ -38,13 +38,13 @@ int faculty_login(int client_socket,char *username, char *password,int *session)
                     fcntl(fd,F_SETLK,&lock);
                     close(fd);
                     if(readBytes > 0){
-                                if(get_count(2)>id){
+                                if(get_count(2)+1>id){
                                     if(strcmp(ad.username,username)!=0 || strcmp(ad.password,password)!=0 ){
                                         wr(client_socket,"Username or Password wrong.....#\n",34);
                                         return 0;
                                     }
                                     else if(strcmp(ad.username,username)==0 && strcmp(ad.password,password)==0){
-                                        *session = id;
+                                        *session = ad.id;
                                         wr(client_socket,"Successfully Authenticated as Faculty....~\n",42);
                                         return 1;
                                     }
@@ -184,7 +184,7 @@ void view_courses(int client_socket, int session){
     struct Course c;
     int bytesRead;
     while((bytesRead=read(fd,&c,sizeof(struct Course))) == sizeof(struct Course) || bytesRead == -1){
-        if(1 && c.profId==session){
+        if(c.isActive && c.profId==session){
             char send[100+sizeof(struct Course)],skip[2];
             sprintf(send,"Course Name: %s\nDepartment: %s\nCredits: %d\nTotal seats: %d\nAvailable Seats: %d\nId: %d\n~\n",c.cname,c.department,c.credits,c.seats,c.available,c.id);
             wr(client_socket,send,strlen(send)+1);

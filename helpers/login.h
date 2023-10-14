@@ -32,9 +32,9 @@ int login(int client_socket){
         break;
     case 2:
         // Teacher
-        int session;
-        if(faculty_login(client_socket,username,password, &session)){
-            handle_faculty(client_socket,session);
+        int profSession;
+        if(faculty_login(client_socket,username,password, &profSession)){
+            handle_faculty(client_socket,profSession);
             return 1;
         }
         else{
@@ -45,7 +45,7 @@ int login(int client_socket){
         // Student
         int session;
         if(student_login(client_socket,username,password, &session)){
-            handle_faculty(client_socket,session);
+            handle_student(client_socket,session);
             return 1;
         }
         else{
