@@ -1,3 +1,6 @@
+
+// Functions to handle Login and other operations of Faculty Module
+
 #ifndef FACULTY_H
 #define FACULTY_H
 
@@ -108,9 +111,6 @@ void handle_faculty(int client_socket, int session){
                     view_enrollments(client_socket,session,&cnt,1);
                     break;
                 case 6:
-                    // change_password(client_socket,2);
-                    break;
-                case 7:
                     wr(client_socket,"Exiting...#\n",13);
                     return;
                     break;

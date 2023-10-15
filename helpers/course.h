@@ -1,3 +1,6 @@
+
+// Functions to get the course structure from course file, and set the available number of seats a course
+
 #ifndef COURSE_H
 #define COURSE_H
 

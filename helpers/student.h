@@ -1,3 +1,6 @@
+
+// Functions to handle Login and other operations of Student Module
+
 #ifndef STUDENT_H
 #define STUDENT_H
 
@@ -110,9 +113,6 @@ void handle_student(int client_socket, int session){
                     }
                     break;
                 case 5: 
-                    //change pass
-                    break;
-                case 6:
                     wr(client_socket,"Exiting...#\n",13);
                     return;
                     break;

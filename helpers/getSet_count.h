@@ -1,3 +1,6 @@
+
+// Functions to get and set count for number of different users created in ERP
+
 #ifndef ACCOUNT_COUNT_H
 #define ACCOUNT_COUNT_H
 int set_count(int type){

@@ -1,3 +1,6 @@
+
+// Server Program to connect to multiple client simultaneously in a safe and consistent manner, and handle different operations for each user.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

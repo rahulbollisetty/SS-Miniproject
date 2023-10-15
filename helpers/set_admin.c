@@ -1,3 +1,6 @@
+
+// Progam to set the initial count numbers of all types of users, courses and enrollments in account_count
+
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>

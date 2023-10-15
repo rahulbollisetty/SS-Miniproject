@@ -1,3 +1,6 @@
+
+// Helper functions for sending and receiving data to and from client
+
 #ifndef RDWR_H
 #define RDWR_H
 

@@ -1,3 +1,6 @@
+
+// Menu for Admin, Faculty and Student
+
 #ifndef MENU_STRING_H
 #define MENU_STRING_H
 
@@ -33,11 +36,10 @@ const char *TEACHER_MENU_STR =
     "3. Remove Course from Catalog\n"
     "4. Modify Course Details\n"
     "5. View Course Enrollments\n"
-    "6. Change Password\n"
-    "7. Exit\n"
+    "6. Exit\n"
     "Enter Choice: \n"
 ;
-const int TEACHER_MENU_LEN = 244;
+const int TEACHER_MENU_LEN = 225;
 
 const char *STUDENT_MENU_STR = 
     "..........................Welcome to Student Menu..........................\n"
@@ -45,9 +47,8 @@ const char *STUDENT_MENU_STR =
     "2. Enroll New course\n"
     "3. Drop Course\n"
     "4. View Course Enrollments\n"
-    "5. Change Password\n"
-    "6. Exit\n"
+    "5. Exit\n"
     "Enter Choice: \n"
 ;
-const int STUDENT_MENU_LEN = 211;
+const int STUDENT_MENU_LEN = 192;
 #endif

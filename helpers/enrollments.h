@@ -1,3 +1,6 @@
+
+// Function to get the Enrollment record for a student in a particular course
+
 #ifndef ENROLLMENT_H
 #define ENROLLMENT_H
 

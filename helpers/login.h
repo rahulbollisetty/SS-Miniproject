@@ -1,3 +1,6 @@
+
+// Helper function to handle login activity for Admin, Faculty and student
+
 #ifndef LOGIN_H
 #define LOGIN_H
 #define MAX_MESSAGE_SIZE 4096

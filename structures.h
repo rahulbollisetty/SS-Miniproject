@@ -1,3 +1,6 @@
+
+// Structures to store and access various records effectively
+
 #define MAX_USERNAME_LENGTH 50
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_NAME_LENGTH 100
@@ -47,6 +50,7 @@ struct Course{
     int id;
 };
 
+// Structure to store enrollment details
 struct Enrollment {
     int studentID;
     int courseID;
