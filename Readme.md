@@ -45,7 +45,7 @@ After successful login of student, can perform the following operations:
 ## Setup and Execution
 First clone the repository 
 
-    enter code here
+    git clone https://github.com/rahulbollisetty/SS-Miniproject.git
 
 > The client-server socket uses 16000 port number
 > Make sure that no other processs is using that number
@@ -63,8 +63,8 @@ Run the client by running the following on your command line:
   - Username: `root`
   - Password: `root`
 
-B Rahul
-MTech CSE [MT2023038]
+B Rahul\
+MTech CSE [MT2023038]\
 International Institute of Information Technology, Bangalore.
 
 
