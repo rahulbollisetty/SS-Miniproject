@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
@@ -26,7 +27,7 @@
 #include "helpers/student.h"
 #include "helpers/login.h"
 
-#define MAX_CLIENTS 100
+#define MAX_CLIENTS 3
 #define MAX_MESSAGE_SIZE 4096
 
 
@@ -71,33 +72,41 @@ int main() {
             perror("Accepting failed");
             continue;
         }
-        // Fork a new process to handle the client
-        pid_t child_pid = fork();
-        if (child_pid == -1) {
-            perror("Fork failed");
+        if (client_count >= MAX_CLIENTS) {
+            printf("Client limit reached. Connection refused.\n");
             close(client_socket);
-            continue;
         }
-
-
-        if (child_pid == 0) {
-            // Child process
-            close(server_socket); // Close the server socket in the child process
-            if (login(client_socket)==0){
-                exit(EXIT_FAILURE);
-            }
-            else{
-                exit(EXIT_SUCCESS);
-            }
-        } else {
-            // Parent process
-            close(client_socket); // Close the client socket in the parent process
-            client_count++;
-            if (client_count >= MAX_CLIENTS) {
-                printf("Maximum number of clients reached. Rejecting new connections.\n");
+        else{
+            // Fork a new process to handle the client
+            pid_t child_pid = fork();
+            if (child_pid == -1) {
+                perror("Fork failed");
                 close(client_socket);
+                continue;
             }
+            if (child_pid == 0) {
+                // Child process
+                close(server_socket); // Close the server socket in the child process
+                if (login(client_socket)==0){
+
+                    exit(EXIT_FAILURE);
+                }
+                else{
+                    exit(EXIT_SUCCESS);
+                }
+
+            } else {
+                // Parent process
+                close(client_socket); // Close the client socket in the parent process
+                client_count++;
+            }
+
         }
+        int status;
+        while (waitpid(-1, &status, WNOHANG) > 0) {
+            client_count--;
+        }
+        
     }
 
     // Close the server socket (not reached in this example)
